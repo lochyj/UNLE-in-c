@@ -43,6 +43,7 @@ typedef struct {
     Node_t* end;
     Color_t color;
     char* value;
+    bool initialized;
 } Edge_t;
 
 typedef struct {
@@ -58,6 +59,6 @@ void events();
 void draw_nodes(Graph_t* graph);
 void draw_graph(Graph_t* graph);
 void setup_graph(Color_t node_color, Color_t edge_color, int node_len, int edge_len, int node_radius);
-int  update(int frame_time);
-void draw_fps(int fps);
+int  update(float frame_time);
+void draw_fps(float fps);
 void draw_edges(Graph_t* graph);
