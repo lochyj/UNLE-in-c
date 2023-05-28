@@ -28,13 +28,14 @@ typedef struct {
 } Color_t;
 
 typedef struct {
-    int x;
-    int y;
-    int dx;
-    int dy;
+    double x;
+    double y;
+    double dx;
+    double dy;
     int radius;
     Color_t color;
     bool seen;
+    int connections;
     char* id;
 } Node_t;
 
@@ -53,12 +54,15 @@ typedef struct {
     int edgeLen;
 } Graph_t;
 
+// Here because it requires the Graph_t type and its associated types
+#include "algorithms.h"
+
 void init();
 void cleanup();
 void events();
 void draw_nodes(Graph_t* graph);
 void draw_graph(Graph_t* graph);
-void setup_graph(Color_t node_color, Color_t edge_color, int node_len, int edge_len, int node_radius);
-int  update(float frame_time);
+void setup_graph(Graph_t* graph, Color_t node_color, Color_t edge_color, int node_len, int edge_len, int node_radius);
+float update(float frame_time);
 void draw_fps(float fps);
 void draw_edges(Graph_t* graph);
