@@ -60,3 +60,4 @@ void draw_graph(Graph_t* graph);
 void setup_graph(Color_t node_color, Color_t edge_color, int node_len, int edge_len, int node_radius);
 int  update(int frame_time);
 void draw_fps(int fps);
+void draw_edges(Graph_t* graph);

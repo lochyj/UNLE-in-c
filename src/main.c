@@ -15,7 +15,7 @@ int window_height = 480;
 int main(int argc, char* argv[]) {
     init();
 
-    setup_graph((Color_t){white}, (Color_t){black}, 100, 10, 5);
+    setup_graph((Color_t){white}, (Color_t){black}, 100, 101, 5);
 
     float fps = 0;
     while (running) {
@@ -34,7 +34,7 @@ int update(int fps) {
 
     draw_graph(&graph);
 
-    draw_fps(fps);
+    //draw_fps(fps);
 
     SDL_SetRenderDrawColor(renderer, white);
     SDL_RenderPresent(renderer);
@@ -54,14 +54,12 @@ void draw_fps(int fps) {
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_Rect rect = {50, 50, 100, 100};
     SDL_RenderCopy(renderer, texture, NULL, &rect);
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(texture);
     free(fps_str);
 }
 
 void draw_graph(Graph_t* graph) {
     draw_nodes(graph);
-    // draw_edges(&graph);
+    draw_edges(graph);
 }
 
 void draw_nodes(Graph_t* graph) {
@@ -71,6 +69,14 @@ void draw_nodes(Graph_t* graph) {
         // SDL_RenderFillCircle(renderer, node->x, node->y, node->radius);
         SDL_SetRenderDrawColor(renderer, black);
         SDL_RenderDrawCircle(renderer, node->x, node->y, node->radius);
+    }
+}
+
+void draw_edges(Graph_t* graph) {
+    for (int i = 0; i < graph->edgeLen; i++) {
+        Edge_t* edge = &graph->edges[i];
+        SDL_SetRenderDrawColor(renderer, color(edge->color));
+        SDL_RenderDrawLine(renderer, edge->start->x, edge->start->y, edge->end->x, edge->end->y);
     }
 }
 
@@ -96,6 +102,15 @@ void setup_graph(Color_t node_color, Color_t edge_color, int node_len, int edge_
         edge.color = edge_color;
         edge.value = "edge";
         graph.edges[i] = edge;
+    }
+
+    //Connects nodes in index order
+    for (int i = 0; i < node_len - 1; i++) {
+        Node_t* start = &graph.nodes[i];
+        Node_t* end = &graph.nodes[i + 1];
+        Edge_t* edge = &graph.edges[i];
+        edge->start = start;
+        edge->end = end;
     }
 }
 
