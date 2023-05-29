@@ -32,17 +32,22 @@ typedef struct {
     double y;
     double dx;
     double dy;
-    int radius;
-    Color_t color;
+
     bool seen;
+
+    Color_t color;
+
     int connections;
+    int radius;
     char* id;
 } Node_t;
 
 typedef struct {
     Node_t* start;
     Node_t* end;
+
     Color_t color;
+
     char* value;
     bool initialized;
 } Edge_t;
@@ -50,9 +55,23 @@ typedef struct {
 typedef struct {
     Node_t* nodes;
     Edge_t* edges;
+
     int nodeLen;
     int edgeLen;
 } Graph_t;
+
+typedef struct {
+    float x;
+    float y;
+
+    float zoom;
+
+    int max_width;
+    int max_height;
+
+    int min_width;
+    int min_height;
+} Camera_t;
 
 // Here because it requires the Graph_t type and its associated types
 #include "algorithms.h"
